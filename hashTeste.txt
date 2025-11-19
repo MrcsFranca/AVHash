@@ -1,0 +1,1 @@
+this is a test file to calculate the hash of it and verify if the function of this project is working propertly
