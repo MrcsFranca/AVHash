@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <cstdlib>
 #include "libAVL.h"
 #include "picosha2.h"
 
@@ -9,19 +10,32 @@ using namespace std;
 
 node *loadDataBase(node *T, string fileToLoad);
 string calculateFileHash(string filePath);
+void updateDataBase();
 
-int main() {
+int main(int argc, char *argv[]) {
+    if(argc < 2) {
+        cerr << "Uso: " << argv[0] << " <arquivo para escanear>" << endl;
+        return 1;
+    }
     node *T = NULL;
     bool exists;
     string hashToSearch;
+    string file = argv[1];
+
+    updateDataBase();
 
     T = loadDataBase(T, "signatures.txt");
 
-    hashToSearch = calculateFileHash("hashTeste.txt");
+    hashToSearch = calculateFileHash(file);
     cout << "hash do arquivo: " << hashToSearch << endl; 
 
     exists = search(T, hashToSearch);
-    cout << exists << endl;
+    
+    if(exists) {
+        cout << "AVISO: Possível malware detectado -> Desconecte-se da internet e exclua o arquivo" << endl;
+    } else {
+        cout << "O arquivo não aparenta ser malicioso" << endl;
+    }
 }
 
 node *loadDataBase(node *T, string fileToLoad) {
@@ -36,6 +50,9 @@ node *loadDataBase(node *T, string fileToLoad) {
     }
 
     while(getline(inputFile, line)) {
+        if(line.empty()) {
+            continue;
+        }
         //lines.push_back(line);
         T = insertAVL(T, line);
     }
@@ -68,4 +85,16 @@ string calculateFileHash(string filePath) {
     string fileHash;
     picosha2::hash256_hex_string(buffer, fileHash);
     return fileHash;
+}
+
+void updateDataBase() {
+    cout << "Começando a atualização do banco de dados..." << endl;
+
+    int result = system("python3 downloadDb.py");
+
+    if(result == 0) {
+        cout << "Banco de dados atualizado com sucesso!" << endl; 
+    } else {
+        cerr << "Erro ao atualizar banco de dados" << endl;
+    }
 }
