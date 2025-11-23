@@ -6,6 +6,10 @@
 #include "libAVL.h"
 #include "picosha2.h"
 
+#define RED "\x1b[31m"
+#define GREEN "\x1b[32m"
+#define WHITE "\x1b[37m"
+
 using namespace std;
 
 node *loadDataBase(node *T, string fileToLoad);
@@ -32,9 +36,9 @@ int main(int argc, char *argv[]) {
     exists = search(T, hashToSearch);
     
     if(exists) {
-        cout << "AVISO: Possível malware detectado -> Desconecte-se da internet e exclua o arquivo" << endl;
+        cout << RED << "AVISO: Possível malware detectado -> Desconecte-se da internet e exclua o arquivo" << WHITE << endl << endl;
     } else {
-        cout << "O arquivo não aparenta ser malicioso" << endl;
+        cout << GREEN << "O arquivo não aparenta ser malicioso" << WHITE << endl << endl;
     }
 }
 
@@ -88,12 +92,10 @@ string calculateFileHash(string filePath) {
 }
 
 void updateDataBase() {
-    cout << "Começando a atualização do banco de dados..." << endl;
-
     int result = system("python3 downloadDb.py");
 
     if(result == 0) {
-        cout << "Banco de dados atualizado com sucesso!" << endl; 
+        cout << "Banco de dados está atualizado!" << endl; 
     } else {
         cerr << "Erro ao atualizar banco de dados" << endl;
     }

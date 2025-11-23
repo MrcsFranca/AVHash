@@ -53,7 +53,8 @@ if __name__ == "__main__":
     observer.schedule(eventHandler, PATH, recursive=False)
 
     print(f"Monitorando a pasta {PATH}")
-    print(f"Pressione Ctrl+C para parar")
+    print("Pressione Ctrl+C para parar")
+    print("----------------------------\n")
 
     observer.start()
 

@@ -108,54 +108,6 @@ node* insertAVL(node* T, string value) {
  
     return T;
 }
- 
-void preOrderAVL(node *T)
-{
-    if(T != NULL)
-    {
-        cout << T->info << endl;
-        preOrderAVL(T->left);
-        preOrderAVL(T->right);
-    }
-}
-
-void inOrderAVL(node *T)
-{
-    if(T != NULL)
-    {
-        inOrderAVL(T->left);
-        cout << T->info << endl;
-		inOrderAVL(T->right);
-    }
-} 
-
-void postOrderAVL(node *T)
-{
-    if(T != NULL)
-    {
-        postOrderAVL(T->left);
-        postOrderAVL(T->right);
-        cout << T->info << endl;
-    }
-}
-
-void showByLevel(node *T, int level, int getDown) {
-	if (T == NULL) return;
-		if (level == getDown) {
-                cout << T->info << " - ";
-	} else if (level < getDown) {
-				showByLevel(T->left,level + 1, getDown);
-				showByLevel(T->right,level + 1, getDown);
-	}
-}
-
-void AVLWidth(node *T) {
-	int height = AVLHeight(T);
-	for (int i = 1; i <= height+1; ++i) {
-		showByLevel(T, 1, i);
-        cout << endl;
-	}
-}
 
 bool search(node *T, string hash) {
     if(T == NULL) {
