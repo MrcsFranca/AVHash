@@ -57,11 +57,8 @@ node *loadDataBase(node *T, string fileToLoad) {
         if(line.empty()) {
             continue;
         }
-        //lines.push_back(line);
         T = insertAVL(T, line);
     }
-
-    //for(const auto &i : lines) cout << i << endl;
 
     inputFile.close();
 

@@ -5,7 +5,7 @@ import subprocess
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
-PATH = r"/home/popos/Downloads"
+PATH = os.path.expanduser("~/Downloads")
 EXEC = "./AVHash"
 
 class watchDownloads(FileSystemEventHandler):
